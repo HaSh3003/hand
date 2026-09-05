@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#121215" />
+    <meta name="description" content="حساباتك الشخصية الخاصة على منصة هاند" />
+    <title>حساباتي الشخصية — هاند</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/theme.js"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <button class="sidebar-close" id="sidebarClose" type="button" aria-label="إغلاق القائمة">×</button>
+        <div class="brand"><span class="brand-mark" aria-hidden="true">هـ</span><div><strong>هاند</strong><small>حسابات السكن</small></div></div>
+        <nav aria-label="القائمة الرئيسية">
+          <a class="nav-link" href="dashboard.html"><span class="nav-icon">⌂</span>الرئيسية</a>
+          <a class="nav-link" href="housing.html"><span class="nav-icon">▦</span>حسابات السكن</a>
+          <a class="nav-link" href="categories.html"><span class="nav-icon">◇</span>التصنيفات</a>
+          <a class="nav-link" href="subscribers.html"><span class="nav-icon">♟</span>حسابات المشتركين</a>
+          <a class="nav-link active" href="personal.html"><span class="nav-icon">♙</span>حساباتي الشخصية</a>
+          <a class="nav-link" href="reports.html"><span class="nav-icon">◒</span>التقارير</a>
+        </nav>
+
+        <div class="sidebar-bottom">
+          <a class="nav-link" href="settings.html"><span class="nav-icon">⚙</span>الإعدادات</a>
+          <a class="nav-link" href="support.html"><span class="nav-icon">❓</span>الدعم</a>
+          <div class="private-space-card"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><strong>مساحة خاصة</strong><small>هذه البيانات لا تظهر لأي فرد آخر في السكن</small></div>
+        </div>
+      </aside>
+
+      <main class="main-content personal-content">
+        <header class="topbar">
+          <button class="menu-btn" id="menuBtn" aria-label="فتح القائمة" aria-expanded="false">☰</button>
+          <div><p class="eyebrow">مساحتك المالية الخاصة</p><h1>حساباتي الشخصية</h1></div>
+          <div class="profile-menu" id="profileMenu">
+            <button class="profile-btn" id="profileBtn" aria-label="قائمة الحساب الشخصي" aria-haspopup="menu" aria-expanded="false"><img class="profile-avatar" src="assets/profile-youssef.png" alt="صورة يوسف أحمد" /><span class="profile-copy"><strong>يوسف أحمد</strong><small>حساب خاص</small></span><svg class="chevron" aria-hidden="true" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"/></svg></button>
+            <div class="profile-dropdown" id="profileDropdown" role="menu" aria-hidden="true"><div class="dropdown-user"><img src="assets/profile-youssef.png" alt="" /><div><strong>يوسف أحمد</strong><small>youssef@hand.app</small></div></div><div class="dropdown-separator"></div><button class="dropdown-item" role="menuitem"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0"/></svg>الملف الشخصي</button><button class="dropdown-item" role="menuitem"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>الدعم</button><button class="dropdown-item logout" id="logoutBtn" role="menuitem"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/></svg>تسجيل الخروج</button></div>
+          </div>
+        </header>
+
+        <section class="personal-title-row">
+          <div><div class="private-label"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>خاص بي فقط</div><h2>نظرة على حساباتك</h2><p>دخلُك ومصروفاتُك الشخصية منفصلة بالكامل عن حسابات ومحفظة السكن.</p></div>
+          <div class="personal-page-actions"><button class="hide-balances-btn" id="hideBalances"><svg viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.5"/></svg><span>إخفاء الأرقام</span></button><button class="add-transaction-btn" id="addPersonalTransaction"><span>+</span> تسجيل حركة</button></div>
+        </section>
+
+        <section class="personal-summary-grid">
+          <article class="personal-balance-card"><svg class="personal-watermark" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="14" rx="3"/><path d="M3 10h18M16 15h2"/></svg><span>الرصيد الشخصي</span><strong class="private-amount" id="personalBalance">0 ج</strong><small id="balanceMessage">متاح للاستخدام</small></article>
+          <article class="personal-stat-card income"><span class="personal-stat-icon">↓</span><div><span>إجمالي الدخل</span><strong class="private-amount" id="personalIncome">0 ج</strong><small id="incomeCount">0 حركات</small></div></article>
+          <article class="personal-stat-card expense"><span class="personal-stat-icon">↑</span><div><span>إجمالي المصروفات</span><strong class="private-amount" id="personalExpense">0 ج</strong><small id="expenseCount">0 حركات</small></div></article>
+          <article class="personal-stat-card saving"><span class="personal-stat-icon">%</span><div><span>نسبة المتبقي</span><strong class="private-amount" id="savingRate">0%</strong><small>من إجمالي الدخل</small></div></article>
+        </section>
+
+        <section class="panel personal-debts-panel">
+          <div class="panel-title debts-heading">
+            <div><p class="section-kicker">خاص بي فقط</p><h3>الديون الشخصية</h3></div>
+            <button class="add-debt-btn" id="addDebt"><span>+</span> إضافة دين</button>
+          </div>
+          <div class="debt-summary-row">
+            <div><span>إجمالي الديون المتبقية</span><strong class="private-amount" id="totalDebtRemaining">0 ج</strong></div>
+            <div><span>تم سداده</span><strong class="private-amount paid" id="totalDebtPaid">0 ج</strong></div>
+            <div><span>ديون قائمة</span><strong id="activeDebtCount">0</strong></div>
+          </div>
+          <div class="debt-list" id="debtList"></div>
+          <div class="debt-empty" id="debtEmpty"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2V3Z"/><path d="M9 8h6M9 12h6"/></svg><strong>لا توجد ديون مسجلة</strong><small>أي دين تضيفه هنا سيظل داخل حسابك الشخصي فقط.</small></div>
+        </section>
+
+        <section class="panel personal-ledger-panel">
+          <div class="panel-title ledger-heading"><div><p class="section-kicker">دفترك الشخصي</p><h3>سجل الحركات الخاصة</h3></div><div class="ledger-filters personal-filters" aria-label="تصفية الحركات"><button class="active" data-filter="all">الكل</button><button data-filter="income">دخل</button><button data-filter="expense">مصروف</button></div></div>
+          <div class="ledger-table-wrap"><table class="ledger-table personal-ledger"><thead><tr><th>الحركة</th><th>الحساب</th><th>التصنيف</th><th>التاريخ</th><th>المبلغ</th><th>الرصيد بعدها</th></tr></thead><tbody id="personalLedgerBody"></tbody></table><div class="ledger-empty" id="personalEmpty"><span>لا توجد حركات شخصية</span><small>ابدأ بتسجيل أول دخل أو مصروف.</small></div></div>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="personalDialog">
+      <form class="dialog-card transaction-form" id="personalForm">
+        <div class="dialog-head"><div><span class="section-kicker">دفترك الخاص</span><h3>تسجيل حركة شخصية</h3></div><button class="close-btn" id="closePersonalDialog" type="button" aria-label="إغلاق">×</button></div>
+        <div class="type-switch personal-type-switch" role="group" aria-label="نوع الحركة"><button class="active" type="button" data-type="income"><span>↓</span> دخل</button><button type="button" data-type="expense"><span>↑</span> مصروف</button></div>
+        <input id="personalType" type="hidden" value="income" />
+        <label>اسم الحركة<input id="personalTitle" type="text" placeholder="مثال: الراتب الشهري" required /></label>
+        <div class="form-two-columns"><label>المبلغ بالجنيه<input id="personalAmount" type="number" min="1" step="0.01" placeholder="0.00" required /></label><label>الحساب<select id="personalAccount"><option>الحساب البنكي</option><option>نقدي</option><option>المحفظة الإلكترونية</option></select></label></div>
+        <label>التصنيف<select id="personalCategory"></select></label>
+        <label>ملاحظة اختيارية<input id="personalNote" type="text" placeholder="تفاصيل إضافية" /></label>
+        <div class="dialog-actions"><button class="ghost-action" id="cancelPersonal" type="button">إلغاء</button><button class="primary-btn" type="submit">حفظ الحركة</button></div>
+      </form>
+    </dialog>
+    <dialog id="debtDialog">
+      <form class="dialog-card debt-form" id="debtForm">
+        <div class="dialog-head"><div><span class="section-kicker">حساب شخصي خاص</span><h3>إضافة دين جديد</h3></div><button class="close-btn" id="closeDebtDialog" type="button" aria-label="إغلاق">×</button></div>
+        <label>الدائن أو جهة الدين<input id="debtCreditor" type="text" placeholder="مثال: أحمد أو البنك" required /></label>
+        <label>وصف الدين<input id="debtTitle" type="text" placeholder="مثال: قرض شخصي" required /></label>
+        <div class="form-two-columns"><label>إجمالي الدين<input id="debtAmount" type="number" min="1" step="0.01" placeholder="0.00" required /></label><label>مدفوع مقدمًا<input id="debtInitiallyPaid" type="number" min="0" step="0.01" value="0" required /></label></div>
+        <label>موعد السداد<input id="debtDueDate" type="date" required /></label>
+        <label>ملاحظة اختيارية<input id="debtNote" type="text" placeholder="أي تفاصيل إضافية" /></label>
+        <div class="private-form-note"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>هذا الدين لن يظهر في حسابات أو تقارير السكن.</div>
+        <div class="dialog-actions"><button class="ghost-action" id="cancelDebt" type="button">إلغاء</button><button class="primary-btn" type="submit">حفظ الدين</button></div>
+      </form>
+    </dialog>
+    <dialog id="debtPaymentDialog">
+      <form class="dialog-card debt-payment-form" id="debtPaymentForm">
+        <div class="dialog-head"><div><span class="section-kicker">تحديث الدين</span><h3>تسجيل سداد</h3></div><button class="close-btn" id="closeDebtPayment" type="button" aria-label="إغلاق">×</button></div>
+        <p class="payment-debt-name" id="paymentDebtName"></p>
+        <input id="paymentDebtId" type="hidden" />
+        <label>المبلغ المدفوع<input id="debtPaymentAmount" type="number" min="1" step="0.01" placeholder="0.00" required /></label>
+        <small class="payment-remaining" id="paymentRemaining"></small>
+        <div class="dialog-actions"><button class="ghost-action" id="cancelDebtPayment" type="button">إلغاء</button><button class="primary-btn" type="submit">تسجيل السداد</button></div>
+      </form>
+    </dialog>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="js/auth.js"></script>
+    <script src="js/personal.js"></script>
+    <script src="js/sidebar-close.js"></script>
+  </body>
+</html>

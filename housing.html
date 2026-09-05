@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#121215" />
+    <meta name="description" content="محفظة حسابات السكن وتسجيل المبالغ الداخلة والمصروفات" />
+    <title>حسابات السكن — هاند</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/theme.js"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <button class="sidebar-close" id="sidebarClose" type="button" aria-label="إغلاق القائمة">×</button>
+        <div class="brand"><span class="brand-mark" aria-hidden="true">هـ</span><div><strong>هاند</strong><small>حسابات السكن</small></div></div>
+        <nav aria-label="القائمة الرئيسية">
+          <a class="nav-link" href="dashboard.html"><span class="nav-icon">⌂</span>الرئيسية</a>
+          <a class="nav-link active" href="housing.html"><span class="nav-icon">▦</span>حسابات السكن</a>
+          <a class="nav-link" href="categories.html"><span class="nav-icon">◇</span>التصنيفات</a>
+          <a class="nav-link" href="subscribers.html"><span class="nav-icon">♟</span>حسابات المشتركين</a>
+          <a class="nav-link" href="personal.html"><span class="nav-icon">♙</span>حساباتي الشخصية</a>
+          <a class="nav-link" href="reports.html"><span class="nav-icon">◒</span>التقارير</a>
+        </nav>
+
+        <div class="sidebar-bottom">
+          <a class="nav-link" href="settings.html"><span class="nav-icon">⚙</span>الإعدادات</a>
+          <a class="nav-link" href="support.html"><span class="nav-icon">❓</span>الدعم</a>
+          <div class="home-card"><span>سكن النخيل</span><strong>6 أفراد</strong><small>المحفظة مشتركة بين جميع أفراد السكن</small></div>
+        </div>
+      </aside>
+
+      <main class="main-content housing-content">
+        <header class="topbar">
+          <button class="menu-btn" id="menuBtn" aria-label="فتح القائمة" aria-expanded="false">☰</button>
+          <div><p class="eyebrow">إدارة المحفظة المشتركة</p><h1>حسابات السكن</h1></div>
+          <div class="profile-menu" id="profileMenu">
+            <button class="profile-btn" id="profileBtn" aria-label="قائمة الحساب الشخصي" aria-haspopup="menu" aria-expanded="false">
+              <img class="profile-avatar" src="assets/profile-youssef.png" alt="صورة يوسف أحمد" />
+              <span class="profile-copy"><strong>يوسف أحمد</strong><small>مدير السكن</small></span>
+              <svg class="chevron" aria-hidden="true" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"/></svg>
+            </button>
+            <div class="profile-dropdown" id="profileDropdown" role="menu" aria-hidden="true">
+              <div class="dropdown-user"><img src="assets/profile-youssef.png" alt="" /><div><strong>يوسف أحمد</strong><small>youssef@hand.app</small></div></div>
+              <div class="dropdown-separator"></div>
+              <button class="dropdown-item" role="menuitem"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0"/></svg>الملف الشخصي</button>
+              <button class="dropdown-item" role="menuitem"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>الدعم</button>
+              <button class="dropdown-item logout" id="logoutBtn" role="menuitem"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/></svg>تسجيل الخروج</button>
+            </div>
+          </div>
+        </header>
+
+        <section class="housing-title-row">
+          <div><p class="section-kicker">محفظة سكن النخيل</p><h2>حركة أموال السكن</h2><p>كل المبالغ التي يدفعها الأفراد تدخل المحفظة، وكل مصروف يُخصم منها تلقائيًا.</p></div>
+          <button class="add-transaction-btn" id="addTransaction"><span>+</span> تسجيل حركة</button>
+        </section>
+
+        <section class="wallet-overview">
+          <article class="wallet-balance" id="walletBalanceCard">
+            <svg class="wallet-watermark" aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="14" rx="3"/><path d="M3 10h18M16 15h2"/></svg>
+            <div class="wallet-label"><span class="wallet-icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="14" rx="3"/><path d="M3 10h18M16 15h2"/></svg></span><span>رصيد المحفظة الحالي</span></div>
+            <strong class="wallet-number" id="walletBalance">0 ج</strong>
+            <div class="wallet-state" id="walletState"><i></i><span>الرصيد متاح للصرف</span></div>
+          </article>
+
+          <div class="wallet-stat-grid">
+            <article class="wallet-stat income"><div><span>إجمالي الداخل</span><strong id="totalIncome">0 ج</strong></div><span class="stat-icon"><svg viewBox="0 0 24 24"><path d="M12 4v16M6 10l6-6 6 6"/></svg></span></article>
+            <article class="wallet-stat expense"><div><span>إجمالي الخارج</span><strong id="totalExpense">0 ج</strong></div><span class="stat-icon"><svg viewBox="0 0 24 24"><path d="M12 20V4M6 14l6 6 6-6"/></svg></span></article>
+            <article class="wallet-stat operations"><div><span>عدد الحركات</span><strong id="transactionCount">0</strong></div><span class="stat-icon"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></svg></span></article>
+          </div>
+        </section>
+
+        <section class="panel ledger-panel">
+          <div class="panel-title ledger-heading">
+            <div><p class="section-kicker">سجل المحفظة</p><h3>آخر الحركات</h3></div>
+            <div class="ledger-filters" aria-label="تصفية الحركات">
+              <button class="active" data-filter="all">الكل</button><button data-filter="income">داخل</button><button data-filter="expense">خارج</button>
+            </div>
+          </div>
+          <div class="ledger-table-wrap">
+            <table class="ledger-table">
+              <thead><tr><th>الحركة</th><th>التصنيف</th><th>التاريخ</th><th>المبلغ</th><th>الرصيد بعدها</th></tr></thead>
+              <tbody id="ledgerBody"></tbody>
+            </table>
+            <div class="ledger-empty" id="ledgerEmpty"><span>لا توجد حركات هنا</span><small>ابدأ بتسجيل أول مبلغ داخل للمحفظة.</small></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="transactionDialog">
+      <form class="dialog-card transaction-form" id="transactionForm">
+        <div class="dialog-head"><div><span class="section-kicker">المحفظة المشتركة</span><h3>تسجيل حركة جديدة</h3></div><button class="close-btn" id="closeDialog" type="button" aria-label="إغلاق">×</button></div>
+        <div class="type-switch" role="group" aria-label="نوع الحركة">
+          <button class="active" type="button" data-type="income"><span>↓</span> مبلغ داخل</button>
+          <button type="button" data-type="expense"><span>↑</span> مصروف خارج</button>
+        </div>
+        <input type="hidden" id="transactionType" value="income" />
+        <label><span id="partyLabel">اسم الفرد</span><input id="partyInput" type="text" placeholder="مثال: محمد علي" required /></label>
+        <label><span>المبلغ بالجنيه</span><input id="amountInput" type="number" min="1" step="0.01" placeholder="0.00" required /><small class="amount-hint" id="amountHint"></small></label>
+        <label>التصنيف<select id="categoryInput"></select></label>
+        <label>ملاحظة اختيارية<input id="noteInput" type="text" placeholder="تفاصيل إضافية عن الحركة" /></label>
+        <div class="dialog-actions"><button class="ghost-action" id="cancelTransaction" type="button">إلغاء</button><button class="primary-btn" type="submit">حفظ الحركة</button></div>
+      </form>
+    </dialog>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="js/auth.js"></script>
+    <script src="js/housing.js"></script>
+    <script src="js/sidebar-close.js"></script>
+  </body>
+</html>

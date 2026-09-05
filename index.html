@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#111114" />
+    <meta name="description" content="تسجيل الدخول إلى منصة هاند لإدارة حسابات السكن" />
+    <title>تسجيل الدخول — هاند</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/login.css" />
+    <script src="js/theme.js"></script>
+  </head>
+  <body>
+    <main class="login-page">
+      <section class="form-side" aria-labelledby="loginTitle">
+        <div class="form-wrap">
+          <a class="mobile-brand" href="index.html" aria-label="هاند — الرئيسية">
+            <span>هـ</span><strong>هاند</strong>
+          </a>
+          <div class="form-heading">
+            <span class="eyebrow">مرحبًا بعودتك</span>
+            <h1 id="loginTitle">سجّل دخولك إلى حسابك</h1>
+            <p>أدخل بياناتك للوصول إلى حسابات السكن ومتابعة مستحقاتك.</p>
+          </div>
+          <form id="loginForm">
+            <label for="email">البريد الإلكتروني</label>
+            <div class="input-wrap">
+              <svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg>
+              <input id="email" type="email" autocomplete="email" placeholder="name@example.com" required />
+            </div>
+            <div class="label-row">
+              <label for="password">كلمة المرور</label>
+              <a href="#">نسيت كلمة المرور؟</a>
+            </div>
+            <div class="input-wrap">
+              <svg aria-hidden="true" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+              <input id="password" type="password" autocomplete="current-password" placeholder="أدخل كلمة المرور" required minlength="6" />
+              <button class="password-toggle" id="passwordToggle" type="button" aria-label="إظهار كلمة المرور">
+                <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.5"/></svg>
+              </button>
+            </div>
+            <label class="remember-row"><input type="checkbox" checked /><span>تذكرني على هذا الجهاز</span></label>
+            <button class="login-btn" type="submit"><span>تسجيل الدخول</span><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></button>
+            <p class="form-note">ليس لديك حساب؟ <a href="#">تواصل مع مدير السكن</a></p>
+            <p class="form-note login-links"><a href="support.html">الدعم والمساعدة</a></p>
+          </form>
+        </div>
+      </section>
+
+      <section class="welcome-side" aria-label="نبذة عن منصة هاند">
+        <div class="visual-glow"></div>
+        <div class="background-icons" aria-hidden="true">
+          <svg class="bg-icon house" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9 21v-7h6v7"/></svg>
+          <svg class="bg-icon receipt" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2V3Z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>
+          <svg class="bg-icon wallet" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="14" rx="3"/><path d="M3 10h18M16 15h2"/></svg>
+          <svg class="bg-icon chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+          <svg class="bg-icon users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2"/><path d="M3 20a6 6 0 0 1 12 0M15 15a4.5 4.5 0 0 1 6 4.2"/></svg>
+        </div>
+        <header class="brand">
+          <span class="brand-mark">هـ</span>
+          <div><strong>هاند</strong><small>حسابات السكن ببساطة</small></div>
+        </header>
+        <div class="welcome-copy">
+          <span class="welcome-tag"><i></i> كل الحسابات في مكان واحد</span>
+          <h2>بيتك مش محتاج<br /><em>حسابات معقدة.</em></h2>
+          <p>نظّم الإيجار والفواتير والمصاريف الجارية، واعرف المطلوب من كل فرد بوضوح وفي أي وقت.</p>
+          <div class="benefit-list">
+            <div><span>01</span><p><strong>قسمة تلقائية</strong><small>نقسم مصروفات السكن على عدد الأفراد بدون حسابات يدوية.</small></p></div>
+            <div><span>02</span><p><strong>مواعيد واضحة</strong><small>تابع الاستحقاقات الشهرية واعرف أقرب موعد للدفع.</small></p></div>
+            <div><span>03</span><p><strong>حساب شخصي</strong><small>كل فرد يعرف المطلوب منه وما قام بدفعه بالتفصيل.</small></p></div>
+          </div>
+        </div>
+        <footer>© 2026 هاند — إدارة أسهل لسكن أهدأ</footer>
+      </section>
+    </main>
+    <script src="js/login.js"></script>
+  </body>
+</html>

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#121215" />
+    <meta name="description" content="إدارة حسابات المشتركين في السكن على هاند" />
+    <title>حسابات المشتركين — هاند</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/theme.js"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <button class="sidebar-close" id="sidebarClose" type="button" aria-label="إغلاق القائمة">×</button>
+        <div class="brand"><span class="brand-mark" aria-hidden="true">هـ</span><div><strong>هاند</strong><small>حسابات السكن</small></div></div>
+        <nav aria-label="القائمة الرئيسية">
+          <a class="nav-link" href="dashboard.html"><span class="nav-icon">⌂</span>الرئيسية</a>
+          <a class="nav-link" href="housing.html"><span class="nav-icon">▦</span>حسابات السكن</a>
+          <a class="nav-link" href="categories.html"><span class="nav-icon">◇</span>التصنيفات</a>
+          <a class="nav-link active" href="subscribers.html"><span class="nav-icon">♟</span>حسابات المشتركين</a>
+          <a class="nav-link" href="personal.html"><span class="nav-icon">♙</span>حساباتي الشخصية</a>
+          <a class="nav-link" href="reports.html"><span class="nav-icon">◒</span>التقارير</a>
+        </nav>
+
+        <div class="sidebar-bottom">
+          <a class="nav-link" href="settings.html"><span class="nav-icon">⚙</span>الإعدادات</a>
+          <a class="nav-link" href="support.html"><span class="nav-icon">❓</span>الدعم</a>
+          <div class="home-card"><span>سكن النخيل</span><strong id="sideSubscribersCount">0 مشتركين</strong><small>إدارة الأعضاء وصلاحيات الوصول</small></div>
+        </div>
+      </aside>
+
+      <main class="main-content subscribers-content">
+        <header class="topbar">
+          <button class="menu-btn" id="menuBtn" aria-label="فتح القائمة" aria-expanded="false">☰</button>
+          <div><p class="eyebrow">إدارة مستخدمي السكن</p><h1>حسابات المشتركين</h1></div>
+          <div class="profile-menu" id="profileMenu">
+            <button class="profile-btn" id="profileBtn" aria-label="قائمة الحساب الشخصي" aria-haspopup="menu" aria-expanded="false"><img class="profile-avatar" src="assets/profile-youssef.png" alt="صورة يوسف أحمد" /><span class="profile-copy"><strong>يوسف أحمد</strong><small>مدير السكن</small></span><svg class="chevron" aria-hidden="true" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"/></svg></button>
+            <div class="profile-dropdown" id="profileDropdown" role="menu" aria-hidden="true"><div class="dropdown-user"><img src="assets/profile-youssef.png" alt="" /><div><strong>يوسف أحمد</strong><small>youssef@hand.app</small></div></div><div class="dropdown-separator"></div><button class="dropdown-item" role="menuitem"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0"/></svg>الملف الشخصي</button><button class="dropdown-item" role="menuitem"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>الدعم</button><button class="dropdown-item logout" id="logoutBtn" role="menuitem"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/></svg>تسجيل الخروج</button></div>
+          </div>
+        </header>
+
+        <section class="subscribers-title-row">
+          <div><p class="section-kicker">أعضاء السكن</p><h2>إدارة حسابات المستخدمين</h2><p>أضف المشتركين وحدد دور كل شخص وقيمة اشتراكه الشهري وحالة حسابه.</p></div>
+          <button class="add-transaction-btn" id="addSubscriber"><span>+</span> إضافة حساب</button>
+        </section>
+
+        <section class="subscriber-summary">
+          <article><span class="subscriber-summary-icon all">♟</span><div><span>كل المشتركين</span><strong id="allSubscribers">0</strong><small>حسابات مسجلة</small></div></article>
+          <article><span class="subscriber-summary-icon active">✓</span><div><span>حسابات نشطة</span><strong id="activeSubscribers">0</strong><small>يمكنهم تسجيل الدخول</small></div></article>
+          <article><span class="subscriber-summary-icon pending">⌛</span><div><span>دعوات معلقة</span><strong id="pendingSubscribers">0</strong><small>لم يكتمل تفعيلها</small></div></article>
+          <article><span class="subscriber-summary-icon money">ج</span><div><span>الاشتراكات المتوقعة</span><strong id="expectedSubscriptions">0 ج</strong><small>إجمالي شهري</small></div></article>
+        </section>
+
+        <section class="panel subscribers-panel">
+          <div class="subscribers-toolbar">
+            <div><p class="section-kicker">دليل المشتركين</p><h3>كل الحسابات</h3></div>
+            <div class="subscriber-tools"><div class="subscriber-search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="subscriberSearch" type="search" placeholder="ابحث بالاسم أو البريد..." /></div><select id="subscriberStatus" aria-label="تصفية حسب الحالة"><option value="all">كل الحالات</option><option value="active">نشط</option><option value="pending">دعوة معلقة</option><option value="disabled">موقوف</option></select></div>
+          </div>
+          <div class="subscribers-table-wrap">
+            <table class="subscribers-table"><thead><tr><th>المستخدم</th><th>رقم الهاتف</th><th>الدور</th><th>الاشتراك الشهري</th><th>تاريخ الانضمام</th><th>الحالة</th><th>إجراء</th></tr></thead><tbody id="subscribersBody"></tbody></table>
+            <div class="ledger-empty" id="subscribersEmpty"><span>لا توجد حسابات مطابقة</span><small>جرّب تغيير البحث أو أضف حسابًا جديدًا.</small></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="subscriberDialog">
+      <form class="dialog-card subscriber-form" id="subscriberForm">
+        <div class="dialog-head"><div><span class="section-kicker">مشترك جديد</span><h3>إضافة حساب مستخدم</h3></div><button class="close-btn" id="closeSubscriberDialog" type="button" aria-label="إغلاق">×</button></div>
+        <label>الاسم بالكامل<input id="subscriberName" type="text" placeholder="مثال: محمد أحمد" required /></label>
+        <label>البريد الإلكتروني<input id="subscriberEmail" type="email" placeholder="name@example.com" required /></label>
+        <label>رقم الهاتف<input id="subscriberPhone" type="tel" placeholder="01xxxxxxxxx" required /></label>
+        <div class="form-two-columns"><label>الدور<select id="subscriberRole"><option value="resident">مشترك</option><option value="manager">مدير السكن</option></select></label><label>الحالة<select id="subscriberAccountStatus"><option value="active">نشط</option><option value="pending">إرسال دعوة</option></select></label></div>
+        <div class="form-two-columns"><label>الاشتراك الشهري<input id="subscriberShare" type="number" min="0" step="0.01" placeholder="مثال: 1580" required /></label><label>تاريخ الانضمام<input id="subscriberJoinDate" type="date" required /></label></div>
+        <div class="account-privacy-note"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><p><strong>البيانات الشخصية محمية</strong><span>هذا الحساب سيرى حسابه الشخصي فقط، بالإضافة إلى بيانات السكن المشتركة المسموح بها.</span></p></div>
+        <div class="dialog-actions"><button class="ghost-action" id="cancelSubscriber" type="button">إلغاء</button><button class="primary-btn" type="submit">إنشاء الحساب</button></div>
+      </form>
+    </dialog>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="js/auth.js"></script>
+    <script src="js/subscribers.js"></script>
+    <script src="js/sidebar-close.js"></script>
+  </body>
+</html>

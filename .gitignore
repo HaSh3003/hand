@@ -1,0 +1,4 @@
+node_modules/
+prisma/hand.db
+prisma/hand.db-journal
+.env.local

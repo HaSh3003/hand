@@ -1,0 +1,134 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                   Int                   @id @default(autoincrement())
+  name                 String
+  email                String                @unique
+  phone                String?
+  role                 String                @default("resident")
+  monthlyShare         Float                 @default(0)
+  status               String                @default("active")
+  joinDate             DateTime              @default(now())
+  createdAt            DateTime              @default(now())
+  passwordHash         String                @default("")
+  avatarUrl            String                @default("assets/profile-youssef.png")
+  personalTransactions PersonalTransaction[]
+  debts                Debt[]
+  housingTransactions  HousingTransaction[]
+  sessions             Session[]
+
+  @@index([status])
+}
+
+model Session {
+  id        Int      @id @default(autoincrement())
+  tokenHash String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model Category {
+  id          Int      @id @default(autoincrement())
+  name        String
+  type        String
+  amount      Float
+  dueDay      Int
+  frequency   String   @default("monthly")
+  amountMode  String   @default("fixed")
+  description String?
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  transactions HousingTransaction[]
+
+  @@index([type, active])
+}
+
+model HousingTransaction {
+  id          Int      @id @default(autoincrement())
+  type        String
+  party       String
+  amount      Float
+  note        String?
+  date        DateTime @default(now())
+  createdAt   DateTime @default(now())
+  categoryId  Int?
+  category    Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  userId      Int?
+  user        User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([date])
+  @@index([type, date])
+}
+
+model PersonalTransaction {
+  id        Int      @id @default(autoincrement())
+  type      String
+  title     String
+  amount    Float
+  account   String
+  category  String
+  note      String?
+  date      DateTime @default(now())
+  createdAt DateTime @default(now())
+  ownerId   Int
+  owner     User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
+  @@index([ownerId, date])
+  @@index([ownerId, type])
+}
+
+model Debt {
+  id        Int           @id @default(autoincrement())
+  creditor  String
+  title     String
+  amount    Float
+  paid      Float          @default(0)
+  dueDate   DateTime
+  note      String?
+  createdAt DateTime       @default(now())
+  ownerId   Int
+  owner     User           @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  payments  DebtPayment[]
+
+  @@index([ownerId, dueDate])
+}
+
+model DebtPayment {
+  id        Int      @id @default(autoincrement())
+  amount    Float
+  date      DateTime @default(now())
+  createdAt DateTime @default(now())
+  debtId    Int
+  debt      Debt     @relation(fields: [debtId], references: [id], onDelete: Cascade)
+
+  @@index([debtId, date])
+}
+
+model Setting {
+  id                   Int     @id @default(1)
+  residenceName        String  @default("سكن النخيل")
+  residentCount        Int     @default(6)
+  currency             String  @default("EGP")
+  monthStart           Int     @default(1)
+  splitMethod          String  @default("equal")
+  includeManager       Boolean @default(true)
+  dueReminder          Boolean @default(true)
+  lowBalanceAlert      Boolean @default(true)
+  transactionAlert     Boolean @default(false)
+  reminderDays         Int     @default(3)
+  theme                String  @default("dark")
+  hidePersonalTotals   Boolean @default(false)
+  requireLogin         Boolean @default(true)
+}

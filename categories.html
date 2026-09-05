@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#121215" />
+    <meta name="description" content="إدارة تصنيفات واستحقاقات حسابات السكن" />
+    <title>التصنيفات — هاند</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/theme.js"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <button class="sidebar-close" id="sidebarClose" type="button" aria-label="إغلاق القائمة">×</button>
+        <div class="brand"><span class="brand-mark" aria-hidden="true">هـ</span><div><strong>هاند</strong><small>حسابات السكن</small></div></div>
+        <nav aria-label="القائمة الرئيسية">
+          <a class="nav-link" href="dashboard.html"><span class="nav-icon">⌂</span>الرئيسية</a>
+          <a class="nav-link" href="housing.html"><span class="nav-icon">▦</span>حسابات السكن</a>
+          <a class="nav-link active" href="categories.html"><span class="nav-icon">◇</span>التصنيفات</a>
+          <a class="nav-link" href="subscribers.html"><span class="nav-icon">♟</span>حسابات المشتركين</a>
+          <a class="nav-link" href="personal.html"><span class="nav-icon">♙</span>حساباتي الشخصية</a>
+          <a class="nav-link" href="reports.html"><span class="nav-icon">◒</span>التقارير</a>
+        </nav>
+
+        <div class="sidebar-bottom">
+          <a class="nav-link" href="settings.html"><span class="nav-icon">⚙</span>الإعدادات</a>
+          <a class="nav-link" href="support.html"><span class="nav-icon">❓</span>الدعم</a>
+          <div class="home-card"><span>سكن النخيل</span><strong>6 أفراد</strong><small>أضف بنود السكن وحدد قيمة وموعد كل بند</small></div>
+        </div>
+      </aside>
+
+      <main class="main-content categories-content">
+        <header class="topbar">
+          <button class="menu-btn" id="menuBtn" aria-label="فتح القائمة" aria-expanded="false">☰</button>
+          <div><p class="eyebrow">إدارة بنود السكن</p><h1>التصنيفات</h1></div>
+          <div class="profile-menu" id="profileMenu">
+            <button class="profile-btn" id="profileBtn" aria-label="قائمة الحساب الشخصي" aria-haspopup="menu" aria-expanded="false">
+              <img class="profile-avatar" src="assets/profile-youssef.png" alt="صورة يوسف أحمد" />
+              <span class="profile-copy"><strong>يوسف أحمد</strong><small>مدير السكن</small></span>
+              <svg class="chevron" aria-hidden="true" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"/></svg>
+            </button>
+            <div class="profile-dropdown" id="profileDropdown" role="menu" aria-hidden="true">
+              <div class="dropdown-user"><img src="assets/profile-youssef.png" alt="" /><div><strong>يوسف أحمد</strong><small>youssef@hand.app</small></div></div>
+              <div class="dropdown-separator"></div>
+              <button class="dropdown-item" role="menuitem"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0"/></svg>الملف الشخصي</button>
+              <button class="dropdown-item" role="menuitem"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>الدعم</button>
+              <button class="dropdown-item logout" id="logoutBtn" role="menuitem"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/></svg>تسجيل الخروج</button>
+            </div>
+          </div>
+        </header>
+
+        <section class="categories-title-row">
+          <div><p class="section-kicker">بنود قابلة لإعادة الاستخدام</p><h2>تصنيفات الحركات والاستحقاقات</h2><p>عرّف البند مرة واحدة بقيمته وموعده، ثم استخدمه عند تسجيل أي حركة في محفظة السكن.</p></div>
+          <button class="add-transaction-btn" id="addCategory"><span>+</span> إضافة تصنيف</button>
+        </section>
+
+        <section class="category-summary">
+          <article><span>إجمالي البنود الشهرية</span><strong id="monthlyTotal">0 ج</strong><small>المبالغ الخارجة المتكررة</small></article>
+          <article><span>عدد التصنيفات</span><strong id="categoriesCount">0</strong><small>داخل وخارج المحفظة</small></article>
+          <article><span>أقرب استحقاق</span><strong id="nearestDue">—</strong><small id="nearestDueName">لا توجد استحقاقات</small></article>
+        </section>
+
+        <section class="panel categories-panel">
+          <div class="panel-title categories-heading">
+            <div><p class="section-kicker">كل البنود</p><h3>التصنيفات المسجلة</h3></div>
+            <div class="ledger-filters category-filters" aria-label="تصفية التصنيفات"><button class="active" data-filter="all">الكل</button><button data-filter="income">داخل</button><button data-filter="expense">خارج</button></div>
+          </div>
+          <div class="category-grid" id="categoryGrid"></div>
+          <div class="ledger-empty" id="categoryEmpty"><span>لا توجد تصنيفات هنا</span><small>أضف أول بند مالي للسكن.</small></div>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="categoryDialog">
+      <form class="dialog-card category-form" id="categoryForm">
+        <div class="dialog-head"><div><span class="section-kicker">بند مالي جديد</span><h3>إضافة تصنيف</h3></div><button class="close-btn" id="closeCategoryDialog" type="button" aria-label="إغلاق">×</button></div>
+        <div class="type-switch" role="group" aria-label="نوع التصنيف">
+          <button type="button" data-type="income"><span>↓</span> مبلغ داخل</button>
+          <button class="active" type="button" data-type="expense"><span>↑</span> مصروف خارج</button>
+        </div>
+        <input type="hidden" id="categoryType" value="expense" />
+        <label>اسم التصنيف<input id="categoryName" type="text" placeholder="مثال: إيجار السكن" required /></label>
+        <div class="form-two-columns">
+          <label>القيمة بالجنيه<input id="categoryAmount" type="number" min="1" step="0.01" placeholder="مثال: 6000" required /></label>
+          <label>يوم الاستحقاق<input id="categoryDueDay" type="number" min="1" max="31" placeholder="مثال: 5" required /></label>
+        </div>
+        <div class="form-two-columns">
+          <label>التكرار<select id="categoryFrequency"><option value="monthly">شهري</option><option value="once">مرة واحدة</option></select></label>
+          <label>طبيعة المبلغ<select id="categoryAmountMode"><option value="fixed">مبلغ ثابت</option><option value="flexible">أساسي قابل للزيادة</option></select></label>
+        </div>
+        <label>وصف اختياري<input id="categoryDescription" type="text" placeholder="تفاصيل قصيرة عن البند" /></label>
+        <div class="dialog-actions"><button class="ghost-action" id="cancelCategory" type="button">إلغاء</button><button class="primary-btn" type="submit">حفظ التصنيف</button></div>
+      </form>
+    </dialog>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="js/auth.js"></script>
+    <script src="js/categories.js"></script>
+    <script src="js/sidebar-close.js"></script>
+  </body>
+</html>

@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#102a43" />
+    <meta
+      name="description"
+      content="لوحة بسيطة لإدارة حسابات السكن والمصاريف الشخصية"
+    />
+    <title>هاند — حسابات السكن</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/theme.js"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <button class="sidebar-close" id="sidebarClose" type="button" aria-label="إغلاق القائمة">×</button>
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">هـ</span>
+          <div>
+            <strong>هاند</strong>
+            <small>حسابات السكن</small>
+          </div>
+        </div>
+
+        <nav aria-label="القائمة الرئيسية">
+          <a class="nav-link active" href="dashboard.html">
+            <span class="nav-icon">⌂</span>
+            الرئيسية
+          </a>
+          <a class="nav-link" href="housing.html">
+            <span class="nav-icon">▦</span>
+            حسابات السكن
+          </a>
+          <a class="nav-link" href="categories.html">
+            <span class="nav-icon">◇</span>
+            التصنيفات
+          </a>
+          <a class="nav-link" href="subscribers.html">
+            <span class="nav-icon">♟</span>
+            حسابات المشتركين
+          </a>
+          <a class="nav-link" href="personal.html">
+            <span class="nav-icon">♙</span>
+            حساباتي الشخصية
+          </a>
+          <a class="nav-link" href="reports.html">
+            <span class="nav-icon">◒</span>
+            التقارير
+          </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+          <a class="nav-link" href="settings.html">
+            <span class="nav-icon">⚙</span>
+            الإعدادات
+          </a>
+          <a class="nav-link" href="support.html">
+            <span class="nav-icon">❓</span>
+            الدعم
+          </a>
+          <div class="home-card">
+            <span>سكن النخيل</span>
+            <strong>6 أفراد</strong>
+            <small>نصيب الفرد من الإيجار 1,000 ج</small>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main-content" id="overview">
+        <header class="topbar">
+          <button class="menu-btn" id="menuBtn" aria-label="فتح القائمة" aria-expanded="false">☰</button>
+          <div>
+            <p class="eyebrow">الخميس، 3 سبتمبر</p>
+            <h1>صباح الخير يا يوسف</h1>
+          </div>
+          <div class="profile-menu" id="profileMenu">
+            <button class="profile-btn" id="profileBtn" aria-label="قائمة الحساب الشخصي" aria-haspopup="menu" aria-expanded="false">
+              <img class="profile-avatar" src="assets/profile-youssef.png" alt="صورة يوسف أحمد" />
+              <span class="profile-copy">
+                <strong>يوسف أحمد</strong>
+                <small>مدير السكن</small>
+              </span>
+              <svg class="chevron" aria-hidden="true" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"/></svg>
+            </button>
+            <div class="profile-dropdown" id="profileDropdown" role="menu" aria-hidden="true">
+              <div class="dropdown-user">
+                <img src="assets/profile-youssef.png" alt="" />
+                <div><strong>يوسف أحمد</strong><small>youssef@hand.app</small></div>
+              </div>
+              <div class="dropdown-separator"></div>
+              <button class="dropdown-item" role="menuitem">
+                <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                الدعم
+              </button>
+              <button class="dropdown-item logout" id="logoutBtn" role="menuitem">
+                <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M10 17l5-5-5-5M15 12H3"/><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/></svg>
+                تسجيل الخروج
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <section class="month-row" aria-labelledby="monthTitle">
+          <div>
+            <p class="section-kicker">نظرة عامة</p>
+            <h2 id="monthTitle">حسابات سبتمبر</h2>
+          </div>
+          <div class="month-actions">
+            <button class="ghost-btn" id="prevMonth" aria-label="الشهر السابق">‹</button>
+            <button class="month-pill" id="monthLabel">سبتمبر 2026</button>
+            <button class="ghost-btn" id="nextMonth" aria-label="الشهر التالي">›</button>
+          </div>
+        </section>
+
+        <section class="summary-grid" aria-label="ملخص حسابات الشهر">
+          <article class="summary-card navy">
+            <svg class="card-watermark" aria-hidden="true" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9 21v-7h6v7"/></svg>
+            <div class="card-head">
+              <span>المطلوب للسكن</span>
+              <span class="icon-box" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9 21v-7h6v7"/></svg>
+              </span>
+            </div>
+            <strong class="metric">9,480 <small>ج</small></strong>
+            <p>إجمالي مستحقات شهر سبتمبر</p>
+            <div class="card-footer"><span>نصيبك</span><strong>1,580 ج</strong></div>
+          </article>
+
+          <article class="summary-card green">
+            <svg class="card-watermark" aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="14" rx="3"/><path d="M3 10h18"/><path d="m15.5 15 1.5 1.5 3-3"/></svg>
+            <div class="card-head">
+              <span>تم تحصيله</span>
+              <span class="icon-box" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="14" rx="3"/><path d="M3 10h18"/><path d="m15.5 15 1.5 1.5 3-3"/></svg>
+              </span>
+            </div>
+            <strong class="metric">6,320 <small>ج</small></strong>
+            <p>من 4 أفراد حتى الآن</p>
+            <div class="progress"><span style="width: 67%"></span></div>
+            <div class="card-footer"><span>نسبة التحصيل</span><strong>67%</strong></div>
+          </article>
+
+          <article class="summary-card amber">
+            <svg class="card-watermark" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            <div class="card-head">
+              <span>المتبقي</span>
+              <span class="icon-box" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              </span>
+            </div>
+            <strong class="metric">3,160 <small>ج</small></strong>
+            <p>مستحق على فردين</p>
+            <div class="card-footer"><span>أقرب استحقاق</span><strong>بعد 3 أيام</strong></div>
+          </article>
+
+          <article class="summary-card blue">
+            <svg class="card-watermark" aria-hidden="true" viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2V3Z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>
+            <div class="card-head">
+              <span>المصاريف الجارية</span>
+              <span class="icon-box" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2V3Z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>
+              </span>
+            </div>
+            <strong class="metric">740 <small>ج</small></strong>
+            <p>4 مصروفات خلال الشهر</p>
+            <div class="card-footer"><span>آخر إضافة</span><strong>غاز — 120 ج</strong></div>
+          </article>
+
+          <article class="summary-card total-in-card">
+            <svg class="card-watermark" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M5 19h14"/></svg>
+            <div class="card-head">
+              <span>إجمالي الداخل</span>
+              <span class="icon-box" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M5 19h14"/></svg></span>
+            </div>
+            <strong class="metric" id="dashboardTotalIn">0 <small>ج</small></strong>
+            <p>كل المبالغ التي دخلت محفظة السكن</p>
+            <div class="card-footer"><span>عدد عمليات الداخل</span><strong id="dashboardIncomeCount">0 حركات</strong></div>
+          </article>
+
+          <article class="summary-card total-out-card">
+            <svg class="card-watermark" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 21V9M7 14l5-5 5 5"/><path d="M5 5h14"/></svg>
+            <div class="card-head">
+              <span>إجمالي الخارج</span>
+              <span class="icon-box" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21V9M7 14l5-5 5 5"/><path d="M5 5h14"/></svg></span>
+            </div>
+            <strong class="metric" id="dashboardTotalOut">0 <small>ج</small></strong>
+            <p>كل المصروفات التي خرجت من المحفظة</p>
+            <div class="card-footer"><span>عدد عمليات الخارج</span><strong id="dashboardExpenseCount">0 حركات</strong></div>
+          </article>
+        </section>
+
+        <section class="content-grid">
+          <article class="panel dues-panel">
+            <div class="panel-title">
+              <div>
+                <p class="section-kicker">الاستحقاقات الشهرية</p>
+                <h3>المطلوب دفعه قريبًا</h3>
+              </div>
+              <button class="text-btn">عرض الكل ←</button>
+            </div>
+
+            <div class="due-list">
+              <div class="due-item">
+                <div class="due-date"><strong>05</strong><span>سبتمبر</span></div>
+                <div class="due-info"><strong>إيجار السكن</strong><span>يتكرر يوم 5 من كل شهر</span></div>
+                <div class="due-amount"><strong>6,000 ج</strong><span class="status urgent">بعد يومين</span></div>
+              </div>
+              <div class="due-item">
+                <div class="due-date"><strong>10</strong><span>سبتمبر</span></div>
+                <div class="due-info"><strong>فاتورة الكهرباء</strong><span>متوسط آخر 3 شهور: 1,240 ج</span></div>
+                <div class="due-amount"><strong>1,350 ج</strong><span class="status">بعد 7 أيام</span></div>
+              </div>
+              <div class="due-item">
+                <div class="due-date"><strong>15</strong><span>سبتمبر</span></div>
+                <div class="due-info"><strong>اشتراك الإنترنت</strong><span>يتكرر يوم 15 من كل شهر</span></div>
+                <div class="due-amount"><strong>630 ج</strong><span class="status">بعد 12 يومًا</span></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="panel personal-panel">
+            <div class="panel-title">
+              <div>
+                <p class="section-kicker">حسابي الشخصي</p>
+                <h3>موقفك هذا الشهر</h3>
+              </div>
+              <span class="status positive">منتظم</span>
+            </div>
+            <div class="personal-total">
+              <span>المطلوب منك</span>
+              <strong>1,703 <small>ج</small></strong>
+            </div>
+            <div class="personal-lines">
+              <div><span>نصيبك في السكن</span><strong>1,580 ج</strong></div>
+              <div><span>مصاريف شخصية</span><strong>123 ج</strong></div>
+              <div class="paid"><span>دفعت حتى الآن</span><strong>1,000 ج</strong></div>
+            </div>
+            <button class="primary-btn" id="recordPayment">تسجيل دفعة</button>
+          </article>
+        </section>
+
+        <section class="panel people-panel" id="people">
+          <div class="panel-title">
+            <div>
+              <p class="section-kicker">أفراد السكن</p>
+              <h3>حالة التحصيل</h3>
+            </div>
+            <button class="outline-btn" id="addExpense">+ إضافة مصروف</button>
+          </div>
+          <div class="people-list">
+            <div class="person"><span class="avatar violet">م</span><div><strong>محمد علي</strong><small>دفع كامل المبلغ</small></div><strong class="money paid-money">1,580 ج</strong></div>
+            <div class="person"><span class="avatar teal">ع</span><div><strong>عمر خالد</strong><small>دفع كامل المبلغ</small></div><strong class="money paid-money">1,580 ج</strong></div>
+            <div class="person"><span class="avatar gold">أ</span><div><strong>أحمد سامي</strong><small>متبقي عليه جزء</small></div><strong class="money due-money">620 ج</strong></div>
+            <div class="person"><span class="avatar rose">ك</span><div><strong>كريم حسن</strong><small>لم يدفع بعد</small></div><strong class="money due-money">1,580 ج</strong></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <dialog id="paymentDialog">
+      <form method="dialog" class="dialog-card">
+        <div class="dialog-head">
+          <div><span class="section-kicker">حسابي الشخصي</span><h3>تسجيل دفعة جديدة</h3></div>
+          <button class="close-btn" value="cancel" aria-label="إغلاق">×</button>
+        </div>
+        <label>المبلغ<input type="number" min="1" placeholder="مثال: 500" required /></label>
+        <label>طريقة الدفع<select><option>نقدي</option><option>تحويل بنكي</option><option>محفظة إلكترونية</option></select></label>
+        <label>ملاحظة اختيارية<input type="text" placeholder="اكتب ملاحظة قصيرة" /></label>
+        <div class="dialog-actions"><button class="ghost-action" value="cancel">إلغاء</button><button class="primary-btn" value="confirm">حفظ الدفعة</button></div>
+      </form>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite">تم حفظ الدفعة بنجاح</div>
+    <script src="js/auth.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/sidebar-close.js"></script>
+  </body>
+</html>
