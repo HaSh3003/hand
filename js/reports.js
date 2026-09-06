@@ -14,7 +14,7 @@ const personalSeed = [
 const scopeInput=document.querySelector("#reportScope"),monthInput=document.querySelector("#reportMonth"),tableBody=document.querySelector("#reportTableBody"),chart=document.querySelector("#movementChart"),breakdown=document.querySelector("#breakdownList");
 
 let reportData={housing:[],personal:[]};
-async function loadData(){const response=await fetch("/api/bootstrap"),data=await response.json();if(!response.ok)throw new Error(data.error||"تعذر تحميل التقارير");reportData.housing=data.housingTransactions.map(item=>({...item,category:item.category?.name||"أخرى",date:String(item.date).slice(0,10)}));reportData.personal=data.personalTransactions.map(item=>({...item,date:String(item.date).slice(0,10)}))}
+async function loadData(){const response=await apiFetch("/api/bootstrap"),data=await response.json();if(!response.ok)throw new Error(data.error||"تعذر تحميل التقارير");reportData.housing=data.housingTransactions.map(item=>({...item,category:item.category?.name||"أخرى",date:String(item.date).slice(0,10)}));reportData.personal=data.personalTransactions.map(item=>({...item,date:String(item.date).slice(0,10)}))}
 function readData(scope){return reportData[scope]||[]}
 function money(value){return `${new Intl.NumberFormat("en-EG",{maximumFractionDigits:2}).format(value)} ج`}
 function date(value){return new Intl.DateTimeFormat("ar-EG",{day:"numeric",month:"short",year:"numeric"}).format(new Date(value))}

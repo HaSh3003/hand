@@ -1,6 +1,6 @@
 const toast=document.querySelector("#toast");let user=null;
 function showToast(message){toast.textContent=message;toast.classList.add("show");setTimeout(()=>toast.classList.remove("show"),2400)}
-async function request(url,options){const response=await fetch(url,options),data=await response.json();if(!response.ok)throw new Error(data.error||"حدث خطأ");return data}
+async function request(url,options){const response=await apiFetch(url,options),data=await response.json();if(!response.ok)throw new Error(data.error||"حدث خطأ");return data}
 function paint(){const role=user.role==="manager"?"مدير السكن":"مشترك";document.querySelector("#profileName").textContent=user.name;document.querySelector("#profileRole").textContent=role;document.querySelector("#profileEmail").textContent=user.email;document.querySelector("#profileNameInput").value=user.name;document.querySelector("#profileEmailInput").value=user.email;document.querySelector("#profilePhoneInput").value=user.phone||"";document.querySelector("#profileAvatarLarge").src=user.avatarUrl||"assets/profile-youssef.png"}
 request("/api/me").then(data=>{user=data.user;paint()}).catch(()=>location.replace("index.html"));
 const form=document.querySelector("#profileForm"),inputs=form.querySelectorAll("input"),actions=document.querySelector("#profileFormActions"),edit=document.querySelector("#editProfileBtn");

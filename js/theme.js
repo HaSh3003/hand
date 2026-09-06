@@ -3,6 +3,13 @@
   const savedTheme = localStorage.getItem(THEME_KEY);
   document.documentElement.dataset.theme = savedTheme === "light" ? "light" : "dark";
 
+  const apiPort = localStorage.getItem("hand_api_port") || "4173";
+  const savedApiBase = localStorage.getItem("hand_api_base");
+  const isLocalHost = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost";
+  window.API_BASE = savedApiBase || (window.location.port === apiPort ? "" : (isLocalHost ? `http://127.0.0.1:${apiPort}` : ""));
+  window.apiUrl = (path) => path.startsWith("http") ? path : window.API_BASE + path;
+  window.apiFetch = (url, options = {}) => fetch(apiUrl(url), { credentials: "include", ...options });
+
   function mountToggle() {
     const host = document.querySelector(".profile-menu") || document.querySelector(".form-side");
     if (!host || document.querySelector("#themeToggle")) return;

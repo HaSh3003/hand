@@ -14,7 +14,7 @@ const walletSeed = [
 
 async function updateWalletTotals() {
   let transactions = walletSeed;
-  try { const response = await fetch("/api/housing-transactions"); const data = await response.json(); if (response.ok && Array.isArray(data)) transactions = data; } catch {}
+  try { const response = await apiFetch("/api/housing-transactions"); const data = await response.json(); if (response.ok && Array.isArray(data)) transactions = data; } catch {}
   const incoming = transactions.filter(item => item.type === "income");
   const outgoing = transactions.filter(item => item.type === "expense");
   const totalIn = incoming.reduce((sum, item) => sum + Number(item.amount), 0);

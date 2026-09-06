@@ -16,7 +16,7 @@ const form = document.querySelector("#categoryForm");
 const typeInput = document.querySelector("#categoryType");
 const toast = document.querySelector("#toast");
 
-async function request(url, options) { const response = await fetch(url, options); const data = await response.json(); if (!response.ok) throw new Error(data.error || "تعذر الاتصال بالخادم"); return data; }
+async function request(url, options) { const response = await apiFetch(url, options); const data = await response.json(); if (!response.ok) throw new Error(data.error || "تعذر الاتصال بالخادم"); return data; }
 async function loadCategories() { categories = await request("/api/categories"); }
 function money(value) { return `${new Intl.NumberFormat("en-EG", { maximumFractionDigits: 2 }).format(value)} ج`; }
 function escapeHtml(value) { return String(value).replace(/[&<>'"]/g, char => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", "'":"&#39;", '"':"&quot;" })[char]); }

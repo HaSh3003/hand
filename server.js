@@ -14,6 +14,11 @@ function json(response, status, data, headers = {}) {
   response.writeHead(status, { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store", ...headers });
   response.end(JSON.stringify(data));
 }
+function corsHeaders(request) {
+  const origin = request.headers.origin || "*";
+  return { "Access-Control-Allow-Origin": origin, "Access-Control-Allow-Methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS", "Access-Control-Allow-Headers": "Content-Type, Cookie", "Access-Control-Allow-Credentials": "true" };
+}
+function setCors(response, request) { for (const [key, value] of Object.entries(corsHeaders(request))) response.setHeader(key, value); }
 
 function hashToken(token) { return createHash("sha256").update(token).digest("hex"); }
 function hashPassword(password) { const salt = randomBytes(16).toString("hex"); return `${salt}:${scryptSync(password, salt, 64).toString("hex")}`; }
@@ -21,6 +26,7 @@ function verifyPassword(password, stored) { try { const [salt, hash] = stored.sp
 function cookieValue(request, name) { const item = String(request.headers.cookie || "").split(";").map(value => value.trim()).find(value => value.startsWith(`${name}=`)); return item ? decodeURIComponent(item.slice(name.length + 1)) : null; }
 async function authenticatedUser(request) { const token = cookieValue(request, "hand_session"); if (!token) return null; const session = await prisma.session.findUnique({ where: { tokenHash: hashToken(token) }, include: { user: true } }); if (!session || session.expiresAt <= new Date() || session.user.status !== "active") { if (session) await prisma.session.delete({ where: { id: session.id } }).catch(() => {}); return null; } return session.user; }
 function publicUser(user) { const { passwordHash, ...safe } = user; return safe; }
+const userPublicSelect = { id: true, name: true, email: true, phone: true, role: true, monthlyShare: true, status: true, joinDate: true, createdAt: true, avatarUrl: true };
 
 async function body(request) {
   let raw = "";
@@ -84,7 +90,7 @@ async function api(request, response, url) {
       prisma.category.findMany({ where: { active: true }, orderBy: { dueDay: "asc" } }),
       prisma.housingTransaction.findMany({ include: { category: true }, orderBy: [{ date: "desc" }, { id: "desc" }] }),
       prisma.personalTransaction.findMany({ where: { ownerId: currentUserId }, orderBy: [{ date: "desc" }, { id: "desc" }] }),
-      prisma.debt.findMany({ where: { ownerId: currentUserId }, include: { payments: true }, orderBy: { dueDate: "asc" } }),
+      prisma.debt.findMany({ where: { OR: [{ ownerId: currentUserId }, { counterpartyId: currentUserId }] }, include: { owner: { select: userPublicSelect }, counterparty: { select: userPublicSelect }, payments: true }, orderBy: { dueDate: "asc" } }),
       prisma.setting.findUnique({ where: { id: 1 } })
     ]);
     return json(response, 200, { currentUserId, currentUser: publicUser(currentUser), users: users.map(publicUser), categories, housingTransactions, personalTransactions, debts, settings });
@@ -133,26 +139,51 @@ async function api(request, response, url) {
     return json(response, 201, transaction);
   }
 
-  if (route === "/api/debts" && method === "GET") return json(response, 200, await prisma.debt.findMany({ where: { ownerId: currentUserId }, include: { payments: true }, orderBy: { dueDate: "asc" } }));
+  if (route === "/api/debts" && method === "GET") return json(response, 200, await prisma.debt.findMany({ where: { OR: [{ ownerId: currentUserId }, { counterpartyId: currentUserId }] }, include: { owner: { select: userPublicSelect }, counterparty: { select: userPublicSelect }, payments: true }, orderBy: { dueDate: "asc" } }));
   if (route === "/api/debts" && method === "POST") {
     const input = await body(request);
     const amount = Number(input.amount), paid = Number(input.paid) || 0;
-    if (!input.creditor || !input.title || amount <= 0 || paid < 0 || paid > amount) return json(response, 400, { error: "بيانات الدين غير صحيحة" });
-    return json(response, 201, await prisma.debt.create({ data: { ownerId: currentUserId, creditor: String(input.creditor).trim(), title: String(input.title).trim(), amount, paid, dueDate: dateValue(input.dueDate), note: String(input.note || "").trim() || null }, include: { payments: true } }));
+    if (!input.title || amount <= 0 || paid < 0 || paid > amount) return json(response, 400, { error: "بيانات الدين غير صحيحة" });
+    const direction = input.direction === "owed_to_me" ? "owed_to_me" : "i_owe";
+    const counterpartyId = Number(input.counterpartyId) || null;
+    if (direction === "owed_to_me" && !counterpartyId) return json(response, 400, { error: "يجب اختيار مستخدم عند تسجيل دين ليك" });
+    if (counterpartyId === currentUserId) return json(response, 400, { error: "لا يمكن اختيار نفسك كطرف في الدين" });
+    let creditor = String(input.creditor || "").trim();
+    if (counterpartyId) {
+      const counterparty = await prisma.user.findUnique({ where: { id: counterpartyId } });
+      if (!counterparty) return json(response, 404, { error: "المستخدم غير موجود" });
+      creditor = direction === "i_owe" ? counterparty.name : currentUser.name;
+    } else if (!creditor) {
+      return json(response, 400, { error: "يجب تحديد جهة الدين" });
+    }
+    const debt = await prisma.debt.create({ data: { ownerId: currentUserId, direction, counterpartyId, creditor, title: String(input.title).trim(), amount, paid, dueDate: dateValue(input.dueDate), note: String(input.note || "").trim() || null }, include: { owner: { select: userPublicSelect }, counterparty: { select: userPublicSelect }, payments: true } });
+    return json(response, 201, debt);
   }
   const debtPayMatch = route.match(/^\/api\/debts\/(\d+)\/payments$/);
   if (debtPayMatch && method === "POST") {
     const debtId = Number(debtPayMatch[1]);
     const input = await body(request);
     const payment = Number(input.amount);
-    const debt = await prisma.debt.findFirst({ where: { id: debtId, ownerId: currentUserId } });
+    const debt = await prisma.debt.findFirst({ where: { id: debtId, OR: [{ ownerId: currentUserId }, { counterpartyId: currentUserId }] }, include: { owner: { select: userPublicSelect }, counterparty: { select: userPublicSelect }, payments: true } });
     if (!debt || payment <= 0 || payment > debt.amount - debt.paid) return json(response, 400, { error: "مبلغ السداد غير صحيح" });
+    const isDebtor = (debt.direction === "i_owe" && debt.ownerId === currentUserId) || (debt.direction === "owed_to_me" && debt.counterpartyId === currentUserId);
+    if (!isDebtor) return json(response, 403, { error: "فقط المدين يمكنه تسجيل السداد" });
     const updated = await prisma.$transaction(async tx => {
       await tx.debtPayment.create({ data: { debtId, amount: payment, date: new Date() } });
       await tx.personalTransaction.create({ data: { ownerId: currentUserId, type: "expense", title: `سداد ${debt.title}`, amount: payment, account: String(input.account || "نقدي"), category: "سداد ديون", note: `سداد إلى ${debt.creditor}`, date: new Date() } });
-      return tx.debt.update({ where: { id: debtId }, data: { paid: { increment: payment } }, include: { payments: true } });
+      return tx.debt.update({ where: { id: debtId }, data: { paid: { increment: payment } }, include: { owner: { select: userPublicSelect }, counterparty: { select: userPublicSelect }, payments: true } });
     });
     return json(response, 200, updated);
+  }
+  const debtDeleteMatch = route.match(/^\/api\/debts\/(\d+)$/);
+  if (debtDeleteMatch && method === "DELETE") {
+    const debtId = Number(debtDeleteMatch[1]);
+    const debt = await prisma.debt.findFirst({ where: { id: debtId, OR: [{ ownerId: currentUserId }, { counterpartyId: currentUserId }] } });
+    if (!debt) return json(response, 404, { error: "الدين غير موجود" });
+    const isCreditor = (debt.direction === "i_owe" && debt.counterpartyId === currentUserId) || (debt.direction === "owed_to_me" && debt.ownerId === currentUserId);
+    if (!isCreditor && debt.ownerId !== currentUserId) return json(response, 403, { error: "لا يمكنك حذف هذا الدين" });
+    await prisma.debt.delete({ where: { id: debtId } });
+    return json(response, 200, { ok: true });
   }
 
   if (route === "/api/settings" && method === "GET") return json(response, 200, await prisma.setting.upsert({ where: { id: 1 }, update: {}, create: { id: 1 } }));
@@ -181,6 +212,8 @@ async function serveStatic(response, pathname) {
 }
 
 const server = http.createServer(async (request, response) => {
+  setCors(response, request);
+  if (request.method === "OPTIONS") { response.writeHead(204); response.end(); return; }
   const url = new URL(request.url, `http://${request.headers.host || "localhost"}`);
   try {
     if (url.pathname.startsWith("/api/")) await api(request, response, url);

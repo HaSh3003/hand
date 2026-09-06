@@ -20,7 +20,8 @@ model User {
   passwordHash         String                @default("")
   avatarUrl            String                @default("assets/profile-youssef.png")
   personalTransactions PersonalTransaction[]
-  debts                Debt[]
+  debts                Debt[]                 @relation("DebtOwner")
+  counterpartyDebts    Debt[]                 @relation("DebtCounterparty")
   housingTransactions  HousingTransaction[]
   sessions             Session[]
 
@@ -90,19 +91,23 @@ model PersonalTransaction {
 }
 
 model Debt {
-  id        Int           @id @default(autoincrement())
-  creditor  String
-  title     String
-  amount    Float
-  paid      Float          @default(0)
-  dueDate   DateTime
-  note      String?
-  createdAt DateTime       @default(now())
-  ownerId   Int
-  owner     User           @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  payments  DebtPayment[]
+  id             Int           @id @default(autoincrement())
+  direction      String        @default("i_owe")
+  creditor       String
+  title          String
+  amount         Float
+  paid           Float          @default(0)
+  dueDate        DateTime
+  note           String?
+  createdAt      DateTime       @default(now())
+  ownerId        Int
+  owner          User           @relation("DebtOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  counterpartyId Int?
+  counterparty   User?          @relation("DebtCounterparty", fields: [counterpartyId], references: [id], onDelete: Cascade)
+  payments       DebtPayment[]
 
   @@index([ownerId, dueDate])
+  @@index([counterpartyId, dueDate])
 }
 
 model DebtPayment {

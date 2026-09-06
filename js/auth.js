@@ -1,5 +1,5 @@
 (async function () {
-  const response = await fetch("/api/me", { credentials: "same-origin" });
+  const response = await apiFetch("/api/me");
   if (!response.ok) { window.location.replace("index.html"); return; }
   const { user } = await response.json();
   const role = user.role === "manager" ? "مدير السكن" : "مشترك";
@@ -23,7 +23,7 @@
   const logout = document.querySelector("#logoutBtn");
   if (logout) logout.addEventListener("click", async event => {
     event.preventDefault(); event.stopImmediatePropagation();
-    await fetch("/api/logout", { method: "POST", credentials: "same-origin", keepalive: true });
+    await apiFetch("/api/logout", { method: "POST", keepalive: true });
     window.location.replace("index.html");
   }, true);
 })();

@@ -29,7 +29,7 @@ const partyInput = document.querySelector("#partyInput");
 const categoryInput = document.querySelector("#categoryInput");
 const toast = document.querySelector("#toast");
 
-async function request(url, options) { const response = await fetch(url, options); const data = await response.json(); if (!response.ok) throw new Error(data.error || "تعذر الاتصال بالخادم"); return data; }
+async function request(url, options) { const response = await apiFetch(url, options); const data = await response.json(); if (!response.ok) throw new Error(data.error || "تعذر الاتصال بالخادم"); return data; }
 async function loadData() { [categories, transactions] = await Promise.all([request("/api/categories"), request("/api/housing-transactions")]); }
 
 function populateCategories(type) {

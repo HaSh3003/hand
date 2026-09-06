@@ -10,7 +10,7 @@ const seed=[
 let subscribers=[];
 const body=document.querySelector("#subscribersBody"),empty=document.querySelector("#subscribersEmpty"),search=document.querySelector("#subscriberSearch"),statusFilter=document.querySelector("#subscriberStatus"),dialog=document.querySelector("#subscriberDialog"),form=document.querySelector("#subscriberForm"),toast=document.querySelector("#toast");
 
-async function request(url,options){const response=await fetch(url,options),data=await response.json();if(!response.ok)throw new Error(data.error||"تعذر الاتصال بالخادم");return data}
+async function request(url,options){const response=await apiFetch(url,options),data=await response.json();if(!response.ok)throw new Error(data.error||"تعذر الاتصال بالخادم");return data}
 function money(value){return `${new Intl.NumberFormat("en-EG",{maximumFractionDigits:2}).format(value)} ج`}
 function date(value){return new Intl.DateTimeFormat("ar-EG",{day:"numeric",month:"short",year:"numeric"}).format(new Date(value))}
 function escapeHtml(value){return String(value).replace(/[&<>'"]/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"})[char])}

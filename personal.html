@@ -10,9 +10,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/loader.css" />
     <script src="js/theme.js"></script>
   </head>
   <body>
+    <script src="js/loader.js"></script>
     <div class="app-shell">
       <aside class="sidebar" id="sidebar">
         <button class="sidebar-close" id="sidebarClose" type="button" aria-label="إغلاق القائمة">×</button>
@@ -61,12 +63,25 @@
             <button class="add-debt-btn" id="addDebt"><span>+</span> إضافة دين</button>
           </div>
           <div class="debt-summary-row">
-            <div><span>إجمالي الديون المتبقية</span><strong class="private-amount" id="totalDebtRemaining">0 ج</strong></div>
-            <div><span>تم سداده</span><strong class="private-amount paid" id="totalDebtPaid">0 ج</strong></div>
+            <div><span>عليا (متبقي)</span><strong class="private-amount" id="iOweRemaining">0 ج</strong></div>
+            <div><span>ليا (متبقي)</span><strong class="private-amount paid" id="owedToMeRemaining">0 ج</strong></div>
             <div><span>ديون قائمة</span><strong id="activeDebtCount">0</strong></div>
           </div>
-          <div class="debt-list" id="debtList"></div>
-          <div class="debt-empty" id="debtEmpty"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2V3Z"/><path d="M9 8h6M9 12h6"/></svg><strong>لا توجد ديون مسجلة</strong><small>أي دين تضيفه هنا سيظل داخل حسابك الشخصي فقط.</small></div>
+          <table class="debt-table hidden" id="debtTable">
+            <thead>
+              <tr>
+                <th>الوصف</th>
+                <th>الشخص</th>
+                <th>إجمالي الدين</th>
+                <th>المتبقي</th>
+                <th>موعد السداد</th>
+                <th>الحالة</th>
+                <th>الإجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="debtListBody"></tbody>
+          </table>
+          <div class="debt-empty" id="debtEmpty"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2V3Z"/><path d="M9 8h6M9 12h6"/></svg><strong>لا توجد ديون مسجلة</strong><small>الديون المختارة من مستخدمين السيستم تظهر عند الطرف الآخر كـ "عليا".</small></div>
         </section>
 
         <section class="panel personal-ledger-panel">
@@ -91,12 +106,25 @@
     <dialog id="debtDialog">
       <form class="dialog-card debt-form" id="debtForm">
         <div class="dialog-head"><div><span class="section-kicker">حساب شخصي خاص</span><h3>إضافة دين جديد</h3></div><button class="close-btn" id="closeDebtDialog" type="button" aria-label="إغلاق">×</button></div>
-        <label>الدائن أو جهة الدين<input id="debtCreditor" type="text" placeholder="مثال: أحمد أو البنك" required /></label>
+        <div class="type-switch debt-direction-switch" role="group" aria-label="اتجاه الدين">
+          <button class="active" type="button" data-direction="i_owe"><span>↓</span> عليا</button>
+          <button type="button" data-direction="owed_to_me"><span>↑</span> ليا</button>
+        </div>
+        <input id="debtDirection" type="hidden" value="i_owe" />
+        <label>الشخص أو الجهة
+          <select id="debtPerson" required>
+            <option value="" disabled selected>اختر شخصًا...</option>
+          </select>
+        </label>
+        <input id="debtCounterpartyId" type="hidden" />
+        <div id="debtExternalWrap" style="display:none">
+          <label>اسم الجهة (خارجية)<input id="debtCreditor" type="text" placeholder="مثال: أحمد أو البنك" /></label>
+        </div>
         <label>وصف الدين<input id="debtTitle" type="text" placeholder="مثال: قرض شخصي" required /></label>
         <div class="form-two-columns"><label>إجمالي الدين<input id="debtAmount" type="number" min="1" step="0.01" placeholder="0.00" required /></label><label>مدفوع مقدمًا<input id="debtInitiallyPaid" type="number" min="0" step="0.01" value="0" required /></label></div>
         <label>موعد السداد<input id="debtDueDate" type="date" required /></label>
         <label>ملاحظة اختيارية<input id="debtNote" type="text" placeholder="أي تفاصيل إضافية" /></label>
-        <div class="private-form-note"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>هذا الدين لن يظهر في حسابات أو تقارير السكن.</div>
+        <div class="private-form-note"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>لو اخترت مستخدم من السيستم والدين "ليا"، هيكون ظاهر عنده كـ "عليا".</div>
         <div class="dialog-actions"><button class="ghost-action" id="cancelDebt" type="button">إلغاء</button><button class="primary-btn" type="submit">حفظ الدين</button></div>
       </form>
     </dialog>
@@ -109,6 +137,13 @@
         <small class="payment-remaining" id="paymentRemaining"></small>
         <div class="dialog-actions"><button class="ghost-action" id="cancelDebtPayment" type="button">إلغاء</button><button class="primary-btn" type="submit">تسجيل السداد</button></div>
       </form>
+    </dialog>
+    <dialog id="deleteDebtDialog">
+      <div class="dialog-card delete-debt-dialog">
+        <div class="dialog-head"><div><span class="section-kicker">تأكيد</span><h3>حذف الدين</h3></div><button class="close-btn" id="closeDeleteDebt" type="button" aria-label="إغلاق">×</button></div>
+        <p class="delete-debt-message" id="deleteDebtMessage">هل أنت متأكد أنك تريد حذف هذا الدين؟ لا يمكن التراجع بعد الحذف.</p>
+        <div class="dialog-actions"><button class="ghost-action" id="cancelDeleteDebt" type="button">إلغاء</button><button class="danger-btn" id="confirmDeleteDebt" type="button">حذف</button></div>
+      </div>
     </dialog>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <script src="js/auth.js"></script>
